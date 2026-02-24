@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Your site description here" />
+  <title>Your Site Title</title>
+
+  <!-- Google Fonts: swap these out for your own pairing -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Design Tokens ─────────────────────────────── */
+    :root {
+      --color-bg:       #0d0d0d;
+      --color-surface:  #161616;
+      --color-border:   #2a2a2a;
+      --color-text:     #f0ece4;
+      --color-muted:    #7a7670;
+      --color-accent:   #c8a96e;
+
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body:    'DM Sans', system-ui, sans-serif;
+
+      --radius:  0.5rem;
+      --max-w:   72rem;
+      --gap:     2rem;
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ─── Reset ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    body {
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 1.1vw, 1.125rem);
+      line-height: 1.7;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    img, video { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul, ol { list-style: none; }
+    button { font: inherit; cursor: pointer; border: none; background: none; }
+
+    /* ─── Layout Helpers ─────────────────────────────── */
+    .container {
+      width: 100%;
+      max-width: var(--max-w);
+      margin-inline: auto;
+      padding-inline: clamp(1rem, 5vw, 3rem);
+    }
+
+    /* ─── Nav ────────────────────────────────────────── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--color-border);
+      backdrop-filter: blur(12px);
+      background: color-mix(in srgb, var(--color-bg) 80%, transparent);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 4rem;
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.875rem;
+      color: var(--color-muted);
+    }
+
+    .nav-links a {
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--color-text); }
+
+    .nav-cta {
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--color-accent);
+      color: var(--color-accent);
+      border-radius: var(--radius);
+      font-size: 0.875rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-cta:hover {
+      background: var(--color-accent);
+      color: var(--color-bg);
+    }
+
+    /* ─── Hero ───────────────────────────────────────── */
+    .hero {
+      flex: 1;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding-block: clamp(5rem, 15vw, 10rem);
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      line-height: 1.1;
+      max-width: 16ch;
+      margin-inline: auto;
+      animation: fade-up 0.8s var(--ease-out-expo) both;
+    }
+
+    .hero p {
+      margin-top: 1.5rem;
+      color: var(--color-muted);
+      max-width: 50ch;
+      margin-inline: auto;
+      animation: fade-up 0.8s 0.15s var(--ease-out-expo) both;
+    }
+
+    .hero-actions {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fade-up 0.8s 0.3s var(--ease-out-expo) both;
+    }
+
+    /* ─── Buttons ────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: var(--radius);
+      font-weight: 500;
+      font-size: 0.9375rem;
+      transition: transform 0.15s, opacity 0.15s;
+    }
+    .btn:hover { transform: translateY(-2px); opacity: 0.9; }
+    .btn:active { transform: translateY(0); }
+
+    .btn-primary {
+      background: var(--color-accent);
+      color: var(--color-bg);
+    }
+    .btn-ghost {
+      border: 1px solid var(--color-border);
+      color: var(--color-muted);
+    }
+
+    /* ─── Cards Section ──────────────────────────────── */
+    .section {
+      padding-block: clamp(4rem, 10vw, 7rem);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-subtitle {
+      color: var(--color-muted);
+      margin-bottom: 3rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+      gap: var(--gap);
+    }
+
+    .card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: calc(var(--radius) * 1.5);
+      padding: 2rem;
+      transition: border-color 0.25s, transform 0.25s var(--ease-out-expo);
+    }
+    .card:hover {
+      border-color: var(--color-accent);
+      transform: translateY(-4px);
+    }
+
+    .card-icon {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      color: var(--color-muted);
+      font-size: 0.9375rem;
+    }
+
+    /* ─── Footer ─────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--color-border);
+      padding-block: 2rem;
+      font-size: 0.875rem;
+      color: var(--color-muted);
+    }
+
+    footer .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* ─── Animations ─────────────────────────────────── */
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(1.5rem); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── Responsive ─────────────────────────────────── */
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ──────────────────────────────────── -->
+  <header>
+    <nav class="container">
+      <span class="nav-logo">Brand</span>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="#" class="nav-cta">Get Started</a>
+    </nav>
+  </header>
+
+  <!-- ── Hero ────────────────────────────────────── -->
+  <main>
+    <section class="hero">
+      <div class="container">
+        <span class="hero-eyebrow">Welcome to our platform</span>
+        <h1>Build something worth remembering</h1>
+        <p>A clean foundation for your next project. Opinionated enough to be useful, flexible enough to be yours.</p>
+        <div class="hero-actions">
+          <a href="#" class="btn btn-primary">Get Started →</a>
+          <a href="#features" class="btn btn-ghost">See Features</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Features ──────────────────────────────── -->
+    <section class="section" id="features">
+      <div class="container">
+        <h2 class="section-title">Everything you need</h2>
+        <p class="section-subtitle">A solid base to build on, nothing more.</p>
+
+        <div class="grid">
+          <div class="card">
+            <div class="card-icon">⚡</div>
+            <h3>Fast by default</h3>
+            <p>Zero dependencies, pure HTML and CSS. Ships nothing that isn't needed.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🎨</div>
+            <h3>Design tokens</h3>
+            <p>CSS custom properties make theming simple — change one variable, update everything.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">📐</div>
+            <h3>Responsive layout</h3>
+            <p>Fluid typography, a fluid container, and a responsive grid out of the box.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ── Footer ──────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <span>© 2026 Brand. All rights reserved.</span>
+      <ul class="nav-links">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>
